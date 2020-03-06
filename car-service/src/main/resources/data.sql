@@ -1,0 +1,6 @@
+INSERT INTO manufacturer (id, name) VALUES (100, 'Ford');
+INSERT INTO manufacturer (id, name) VALUES (101, 'Chevrolet');
+
+INSERT INTO car (id, created_at, modified_at, condition, model, manufacturer_id, number_of_doors, fuel_type, engine, mileage, model_year, production_year, external_color, lat, lon, address, city, state, zip) VALUES (20, '2018-12-03T08:20:30', '2018-12-03T08:20:30', 'NEW','Expedition', 100, 4, 'Gasoline', '3.6L V6', 32280, 2018, 2018, 'white', 40.730610, -73.935242, 700, 'Oak Street', 'Brockton MA', 2301);
+INSERT INTO car (id, created_at, modified_at, condition, model, manufacturer_id, number_of_doors, fuel_type, engine, mileage, model_year, production_year, external_color, lat, lon, address, city, state, zip) VALUES (21, '2019-01-12T09:20:30', '2018-12-03T08:20:30', 'USED','Onix', 101, 4, 'Gasoline', '4.2L V6', 22280, 2019, 2019, 'red', 35.680410, -61.535142, 66-4, 'Parkhurst Rd', 'Chelmsford MA', 1824);
+INSERT INTO car (id, created_at, modified_at, condition, model, manufacturer_id, number_of_doors, fuel_type, engine, mileage, model_year, production_year, external_color, lat, lon, address, city, state, zip) VALUES (22, '2017-11-05T12:11:55', '2018-12-03T08:20:30', 'NEW','Camaro', 101, 2, 'Gasoline', '3.0L V6', 50062, 2017, 2017, 'white', 62.548510, -45.957856, 55, 'Brooksby Village Way', 'Danvers MA', 1923);
