@@ -46,6 +46,7 @@ public class CarControllerTest {
     public void testPost() throws Exception {
         Car car = new Car();
         car.setId(1L);
+        car.setCondition(Condition.NEW);
         ObjectMapper objectMapper = new ObjectMapper();
         mockMvc.perform(MockMvcRequestBuilders.post(CarController.CAR)
                 .content(objectMapper.writeValueAsString(car))

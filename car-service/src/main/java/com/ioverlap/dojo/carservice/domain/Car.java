@@ -4,6 +4,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,12 +23,15 @@ public class Car {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Condition condition;
 
+    @Valid
     @Embedded
     private Details details;
 
+    @Valid
     @Embedded
     private Location location;
 

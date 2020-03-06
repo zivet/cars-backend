@@ -2,12 +2,15 @@ package com.ioverlap.dojo.carservice.domain;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class Details {
 
+    @NotNull
     private String model;
 
+    @NotNull
     @ManyToOne
     private Manufacturer manufacturer;
 

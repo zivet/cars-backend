@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> post(@RequestBody Car car) {
+    public ResponseEntity<Car> post(@Valid @RequestBody Car car) {
         URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost").port(8080).build().encode().toUri();
         return ResponseEntity.created(uri).body(carService.save(car));
     }

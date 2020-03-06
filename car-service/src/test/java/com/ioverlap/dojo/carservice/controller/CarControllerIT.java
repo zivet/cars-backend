@@ -1,6 +1,8 @@
 package com.ioverlap.dojo.carservice.controller;
 
 import com.ioverlap.dojo.carservice.domain.Car;
+import com.ioverlap.dojo.carservice.domain.Condition;
+import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +52,25 @@ public class CarControllerIT {
     public void testPost() {
         Car car = new Car();
         car.setId(1L);
+        car.setCondition(Condition.NEW);
         URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost").port(port)
                 .path(CarController.CAR)
                 .build()
                 .encode().toUri();
         ResponseEntity<Car> responseEntity = restTemplate.postForEntity(uri, car, Car.class);
         assertEquals(1L, responseEntity.getBody().getId());
+    }
+
+    @Test
+    public void testPostErrorArgumentNotValid() {
+        Car car = new Car();
+        car.setId(1L);
+        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost").port(port)
+                .path(CarController.CAR)
+                .build()
+                .encode().toUri();
+        ResponseEntity<Car> responseEntity = restTemplate.postForEntity(uri, car, Car.class);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test

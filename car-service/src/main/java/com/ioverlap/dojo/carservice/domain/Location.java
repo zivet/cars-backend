@@ -1,12 +1,15 @@
 package com.ioverlap.dojo.carservice.domain;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class Location {
 
+    @NotNull
     private Double lat;
 
+    @NotNull
     private Double lon;
 
     private String address;
