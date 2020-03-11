@@ -1,5 +1,6 @@
 package com.ioverlap.dojo.carservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -35,6 +36,7 @@ public class Car {
     @Embedded
     private Location location;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Transient
     private String price;
 
