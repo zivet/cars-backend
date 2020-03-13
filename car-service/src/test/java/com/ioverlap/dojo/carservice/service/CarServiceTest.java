@@ -9,22 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebMvcTest(CarService.class)
 public class CarServiceTest {
 
-    @Autowired
     public CarService carService;
-
-    @MockBean
-    private CarRepository carRepository;
 
     private Logger log = LoggerFactory.getLogger(CarServiceTest.class);
 
@@ -34,9 +26,13 @@ public class CarServiceTest {
         car.setId(1L);
         car.setCondition(Condition.NEW);
         Optional<Car> optionalCar = Optional.of(car);
-        Mockito.when(carRepository.findById(1L)).thenReturn(optionalCar);
-        Mockito.when(carRepository.findById(2L)).thenReturn(Optional.empty());
-        Mockito.when(carRepository.save(car)).thenReturn(car);
+
+        CarRepository carRepositoryMock = Mockito.mock(CarRepository.class);
+        Mockito.when(carRepositoryMock.findById(1L)).thenReturn(optionalCar);
+        Mockito.when(carRepositoryMock.findById(2L)).thenReturn(Optional.empty());
+        Mockito.when(carRepositoryMock.save(car)).thenReturn(car);
+
+        carService = new CarServiceImpl(carRepositoryMock);
     }
 
     @Test

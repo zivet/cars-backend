@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class CarServiceImpl implements CarService {
 
-    @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     public List<Car> findAll() {
         return (List<Car>) carRepository.findAll();

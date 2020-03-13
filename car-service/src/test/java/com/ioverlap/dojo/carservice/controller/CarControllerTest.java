@@ -2,6 +2,7 @@ package com.ioverlap.dojo.carservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ioverlap.dojo.carservice.domain.Car;
+import com.ioverlap.dojo.carservice.domain.CarRepresentationModel;
 import com.ioverlap.dojo.carservice.domain.Condition;
 import com.ioverlap.dojo.carservice.service.CarService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Arrays;
 
 @WebMvcTest
+@Import(CarRepresentationModel.class)
 public class CarControllerTest {
 
     @Autowired
@@ -34,6 +37,7 @@ public class CarControllerTest {
         Mockito.when(carService.findAll()).thenReturn(Arrays.asList(car));
         Mockito.when(carService.findById(1L)).thenReturn(car);
         Mockito.when(carService.save(car)).thenReturn(car);
+        Mockito.when(carService.update(car)).thenReturn(car);
     }
 
     @Test
@@ -81,6 +85,4 @@ public class CarControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-
-
 }
