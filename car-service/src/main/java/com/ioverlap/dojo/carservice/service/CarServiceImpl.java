@@ -1,5 +1,6 @@
 package com.ioverlap.dojo.carservice.service;
 
+import com.ioverlap.dojo.carservice.client.PriceClient;
 import com.ioverlap.dojo.carservice.domain.Car;
 import com.ioverlap.dojo.carservice.domain.CarRepository;
 import com.ioverlap.dojo.carservice.exception.NotFoundException;
@@ -15,9 +16,12 @@ public class CarServiceImpl implements CarService {
 
     private CarRepository carRepository;
 
+    private PriceClient priceClient;
+
     @Autowired
-    public CarServiceImpl(CarRepository carRepository) {
+    public CarServiceImpl(CarRepository carRepository, PriceClient priceClient) {
         this.carRepository = carRepository;
+        this.priceClient = priceClient;
     }
 
     public List<Car> findAll() {
@@ -26,6 +30,7 @@ public class CarServiceImpl implements CarService {
 
     public Car findById(Long id) {
         Optional<Car> optionalCar = carRepository.findById(id);
+        optionalCar.ifPresent(car -> car.setPrice(priceClient.getPrice(id)));
         return optionalCar.orElseThrow(() -> new NotFoundException( "car with id=" + id + " does not exist."));
     }
 

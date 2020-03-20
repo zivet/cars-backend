@@ -14,7 +14,7 @@ import java.util.stream.LongStream;
 public class PriceService {
 
     private static final Map<Long, Price> PRICES = LongStream
-            .range(1, 20)
+            .range(1, 50)
             .mapToObj(i -> new Price("USD", randomPrice(), i))
             .collect(Collectors.toMap(Price::getVehicleId, p -> p));
 

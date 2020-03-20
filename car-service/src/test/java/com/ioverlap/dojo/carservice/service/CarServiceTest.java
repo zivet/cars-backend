@@ -1,5 +1,6 @@
 package com.ioverlap.dojo.carservice.service;
 
+import com.ioverlap.dojo.carservice.client.PriceClient;
 import com.ioverlap.dojo.carservice.domain.Car;
 import com.ioverlap.dojo.carservice.domain.CarRepository;
 import com.ioverlap.dojo.carservice.domain.Condition;
@@ -32,7 +33,11 @@ public class CarServiceTest {
         Mockito.when(carRepositoryMock.findById(2L)).thenReturn(Optional.empty());
         Mockito.when(carRepositoryMock.save(car)).thenReturn(car);
 
-        carService = new CarServiceImpl(carRepositoryMock);
+        PriceClient priceClientMock = Mockito.mock(PriceClient.class);
+        Mockito.when(priceClientMock.getPrice(1L)).thenReturn("$20317.22");
+        Mockito.when(priceClientMock.getPrice(2L)).thenReturn("$20317.22");
+
+        carService = new CarServiceImpl(carRepositoryMock, priceClientMock);
     }
 
     @Test
