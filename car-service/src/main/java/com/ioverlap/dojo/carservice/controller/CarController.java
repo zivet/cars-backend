@@ -7,14 +7,15 @@ import com.ioverlap.dojo.carservice.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,15 +49,15 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<EntityModel> post(@Valid @RequestBody Car car) {
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost").port(8080).build().encode().toUri();
-        return ResponseEntity.created(uri).body(carRepresentationModel.toModel(carService.save(car)));
+    public ResponseEntity<EntityModel> post(@Valid @RequestBody Car car) throws URISyntaxException {
+        EntityModel<Car> entityModel = carRepresentationModel.toModel(carService.save(car));
+        return ResponseEntity.created(new URI(entityModel.getRequiredLink(IanaLinkRelations.SELF).expand().getHref()))
+                .body(entityModel);
     }
 
     @PutMapping(value = ID)
     public ResponseEntity<EntityModel> put(@PathVariable Long id, @RequestBody Car car) {
         car.setId(id);
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost").port(8080).build().encode().toUri();
         return ResponseEntity.status(HttpStatus.OK).body(carRepresentationModel.toModel(carService.update(car)));
     }
 
