@@ -2,6 +2,7 @@ package com.ioverlap.dojo.carservice;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -11,6 +12,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.mediatype.hal.Jackson2HalModule;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 
@@ -37,5 +39,10 @@ public class CarServiceApplication {
 		converter.setSupportedMediaTypes(Arrays.asList(MediaTypes.HAL_JSON));
 		converter.setObjectMapper(objectMapper);
 		return restTemplateBuilder.messageConverters(converter).build();
+	}
+
+	@Bean(name="pricing")
+	public WebClient webClientPricing(@Value("${pricing.endpoint}") String endpoint) {
+		return WebClient.create(endpoint);
 	}
 }
